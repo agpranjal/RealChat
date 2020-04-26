@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <title>Chat room</title>
+</head>
+
+<body style="background-color: #eeeeee;">
+
+    {%if username_error%}
+    <div class="alert alert-danger" role="alert">
+        Username not available. Please try another one.
+    </div>
+    {%endif%}
+
+    {%if room_error%}
+    <div class="alert alert-danger" role="alert">
+        Room not available. Please request administrator to open a new room.
+    </div>
+    {%endif%}
+
+
+    <div class="container col-6 mt-4">
+        <h2>Join a chat room now!</h2>
+        <form method="POST" class="mt-3"> {%csrf_token%}
+            Join room: <input autocomplete="off" class="mb-3 form-control" id="room-name-input" type="text"
+                name="room_name" placeholder="Room name" autofocus="on">
+            Join as: <input autocomplete="off" class="mb-3 form-control" type="text" name="username"
+                placeholder="Username">
+            <input id="room-name-submit" type="submit" class="form-control btn btn-primary" value="Enter">
+        </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
