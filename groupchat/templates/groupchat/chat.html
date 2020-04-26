@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    
+
     <title>Chat room</title>
 </head>
 
@@ -20,10 +20,8 @@
             <nav class="text-dark bg-light m-0 border-right" style="height:100%; width:100%;">
                 <ul style="list-style-type: none;" class="p-0 text-center">
                     <li class="py-3 text-success border-bottom "><strong> ACTIVE USERS </strong></li>
-                    <li class="p-3">Example</li>
-                    <li class="p-3">Example</li>
-                    <li class="p-3">Example</li>
-                    <li class="p-3">Example</li>
+                    <div id="active-users">
+                    </div>
                 </ul>
             </nav>
         </div>
@@ -48,6 +46,8 @@
                     "/" +
                     "groupchat/" +
                     roomName +
+                    "/" +
+                    username +
                     '/'
                 );
 
@@ -56,6 +56,14 @@
 
                 chatSocket.onmessage = function (e) {
                     const data = JSON.parse(e.data);
+
+                    // reset the list of active users
+                    document.getElementById("active-users").innerHTML = ""
+                    console.log(data.all_users)
+                    
+                    data.all_users.forEach((user) => {
+                        document.getElementById("active-users").innerHTML += `<li class="p-3">${user}</li>`
+                    })
 
                     if (data.messages.trim() != "") {
 

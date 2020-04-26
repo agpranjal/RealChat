@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from .models import User
 from .models import Room
 
 def join_room(request):
@@ -11,9 +11,12 @@ def join_room(request):
         # If room_name exists
         if room_name in list(map(str, Room.objects.all())):
 
+            # get the room_name object
+            r = Room.objects.get(room_name=room_name)
+
             # If username does not exist already
             if username not in list(map(str, User.objects.all())):
-                new_user = User.objects.create(username=username)
+                new_user = User.objects.create(username=username, room=r)
                 return render(request, "groupchat/chat.html", {
                     "username": username,
                     "room_name": room_name
