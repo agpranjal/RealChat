@@ -1,0 +1,24 @@
+{%extends "base.html"%}
+{%load crispy_forms_tags%}
+{%block content%}
+
+	{%if user.is_authenticated%}
+	<script>
+		window.location.href = "http://" + window.location.host + "/" + "privatechat/"
+	</script>
+	{%endif%}
+<div class="row justify-content-center mt-5">
+    <div class="mx-auto col-6">
+        <div class="card">
+            <div class="card-body">
+                <h1>Log in</h1>
+                <form method="POST"> {%csrf_token%}
+                    {{form|crispy}}
+                    <input type="submit" class="btn btn-primary" value="Log in">
+                    <a href="{%url 'password_reset' %}" class="btn btn-link">Forgot Password?</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -34,7 +34,9 @@ INSTALLED_APPS = [
     "privatechat",
     "groupchat",
     "randomchat",
+    "authapp",
     "channels",
+    "crispy_forms",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -133,3 +135,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "realchat/static/")]
+
+LOGIN_REDIRECT_URL = "/privatechat/"
+LOGOUT_REDIRECT_URL = "/"
+CRISPY_TEMPLATE_PACK = "bootstrap4"
+

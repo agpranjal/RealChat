@@ -19,8 +19,12 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    
     path("", views.index),
-    path("privatechat/", include("privatechat.urls")),
     path("groupchat/", include("groupchat.urls")),
-    path("randomchat/", include("randomchat.urls"))
+    path("randomchat/", include("randomchat.urls")),
+    
+    path("privatechat/", include("privatechat.urls")),
+    path("authenticate/", include("authapp.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]

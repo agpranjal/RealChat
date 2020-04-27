@@ -2,7 +2,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from django.urls import path
 
 from groupchat import groupchat_consumers
-import privatechat
+from privatechat import privatechat_consumers
 import randomchat
 
 application = ProtocolTypeRouter({
@@ -10,12 +10,15 @@ application = ProtocolTypeRouter({
     # handler for websocket connections
     "websocket":URLRouter([
         path("groupchat/<str:room_name>/<str:username>/", groupchat_consumers.GroupChatConsumer),
-        # path("privatechat/", privatechat.PrivateChatConsumer),
+        path("privatechat/", privatechat_consumers.PrivateChatConsumer),
         # path("randomchat/", randomchat.RandomChatConsumer)
     ])
 
     # handler for http connections getsautomatically added
 })
+
+
+
 
 
 # delete all the existing users on startup
