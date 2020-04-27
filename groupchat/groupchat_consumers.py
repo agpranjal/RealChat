@@ -29,14 +29,27 @@ class GroupChatConsumer(WebsocketConsumer):
     def disconnect(self, code):
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         username = self.scope["url_route"]["kwargs"]["username"]
-
-        # delete the user from django.contrib.auth.models.User
+        
+        # delete the username so that it can be used by someone else
         User.delete(User.objects.get(username=username))
         
+        # send the all messages to the users in the group
+        # broadcast the updated list of active members
+        all_users = User.objects.all()
+        r = Room.objects.get(room_name=room_name)
+        messages = r.messages
+
+        async_to_sync(self.channel_layer.group_send)(room_name, {
+            "type": "groupchat.messages",
+            "msg": messages,
+            "all_users": list(map(str, all_users))})
+
+
         # remove the current channel layer from the group whose name is room_name
         async_to_sync(self.channel_layer.group_discard)(room_name, self.channel_name)
+        
         self.close(code)
-    
+
     def receive(self, text_data):
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
         messages = json.loads(text_data)["messages"]
@@ -48,7 +61,8 @@ class GroupChatConsumer(WebsocketConsumer):
 
         # get the list of all active users
         all_users = User.objects.filter(room__room_name = room_name)
-
+        
+        # send the received message to all the users in the room
         async_to_sync(self.channel_layer.group_send)(room_name, {
             "type":"groupchat.messages",
             "msg": Room.objects.get(room_name=room_name).messages,

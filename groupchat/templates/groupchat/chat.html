@@ -19,9 +19,8 @@
         <div class="col-2">
             <nav class="text-dark bg-light m-0 border-right" style="height:100%; width:100%;">
                 <ul style="list-style-type: none;" class="p-0 text-center">
-                    <li class="py-3 text-success border-bottom "><strong> ACTIVE USERS </strong></li>
-                    <div id="active-users">
-                    </div>
+                    <li class="py-3 text-danger border-bottom "><strong> ACTIVE USERS </strong></li>
+                    <div id="active-users" class="text-success"> </div>
                 </ul>
             </nav>
         </div>
@@ -59,10 +58,8 @@
 
                     // reset the list of active users
                     document.getElementById("active-users").innerHTML = ""
-                    console.log(data.all_users)
-                    
                     data.all_users.forEach((user) => {
-                        document.getElementById("active-users").innerHTML += `<li class="p-3">${user}</li>`
+						document.getElementById("active-users").innerHTML += `<li class="p-3"><strong>${user}</strong></li>`
                     })
 
                     if (data.messages.trim() != "") {

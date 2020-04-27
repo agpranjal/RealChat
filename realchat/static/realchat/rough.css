@@ -1,31 +1,26 @@
 body{
-    background: rgb(0,255,189);
-    background: linear-gradient(90deg, #E5C1BD 0%, #B388EB 100%);
+	background: #eeeeee;
 }
 img{
-    border-radius: 50%;
-    background-repeat: no-repeat;
-    height: 100%;
-    width: 100%;
+	border-radius: 50%;
+	background-repeat: no-repeat;
+	height: 100%;
+	width: 100%;
 }
 div>a>img:hover{
-    transition: 0.3s;
-    box-shadow: 2px 2px 2px 2px rgba(235, 52, 76, 0.8),
-                4px 4px 4px 4px rgba(235, 52, 76, 0.4),
-                8px 8px 8px 8px rgba(235, 52, 76, 0.2)
+	transition: 0.3s;
+	box-shadow: 2px 2px 2px 2px rgba(235, 52, 76, 0.8),
+	4px 4px 4px 4px rgba(235, 52, 76, 0.4),
+	8px 8px 8px 8px rgba(235, 52, 76, 0.2)
 }
 #text1{
-    font-family: 'Merriweather', serif;
-    color: #1F2041;
-    letter-spacing: 1.5rem ;
-    text-decoration: underline;
+	font-family: 'Merriweather', serif;
+	color: #1F2041;
+	letter-spacing: 1.2rem 
 }
 #text2{
-    font-family: 'Merriweather', serif;
-    color: #1F2041;
-    font-size: 1.5rem;
-    text-decoration: underline;
-}
-#contbg{
-    background-color: #DDDDDF !important;
+	margin-top:30px;
+	font-family: 'Merriweather', serif;
+	color: #1F2041;
+	font-size: 1.5rem;
 }
