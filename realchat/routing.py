@@ -19,5 +19,12 @@ application = ProtocolTypeRouter({
 
 
 # delete all the existing users on startup
-from groupchat.models import User, Room
+from groupchat.models import User
 list(map(User.delete, User.objects.all()))
+
+# delete all the chat logs during server startup
+from groupchat.models import Room
+for r in Room.objects.all():
+    r.messages = ""
+    r.save()
+
