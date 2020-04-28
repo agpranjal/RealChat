@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
-def join_chat(request):
-    username = request.user.username
-    return render(request, "privatechat/join_chat.html")
+
+@login_required
+def chat(request):
+
+    return render(request, "privatechat/chat.html",{
+        "active_users":list(map(str, User.objects.all()))
+        })

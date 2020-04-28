@@ -7,6 +7,10 @@ class GroupChatConsumer(WebsocketConsumer):
 
     def connect(self):
         self.accept()
+
+        print(self.channel_name)
+        print(self.channel_layer_alias)
+
         room_name = self.scope["url_route"]["kwargs"]["room_name"]
 
         # room_name room already exists
