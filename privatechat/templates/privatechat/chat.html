@@ -12,6 +12,8 @@
 
 <body style="background-color: #ffffff;" class="h-100">
 
+
+	<!-- Navigation top bar -->
 	<nav class="navbar bg-dark m-0">
 		<span class="navbar-brand mb-0 h1 mx-auto text-light"><strong id="destination-user"></strong></span>
 
@@ -28,6 +30,8 @@
 		</div>
 	</nav>
 
+
+	<!-- Navigation side bar -->
 	<div class="row w-100" style="height: 90%;">
 		<div class="col-2">
 			<nav class="text-dark bg-light m-0 border-right" style="height:100%; width:100%;">
@@ -57,14 +61,14 @@
 		</div>
 
 
-		<!-- Taking message as input  -->
+		<!-- Taking message as input as displaying it in chat-log -->
 		<div class="col-10 h-100">
 			<div class="h-100">
 				<div class="bg-light rounded shaodw pl-2 pt-3 pb-3 mb-3" style="overflow:auto; height: 90%;"
 					id="chat-log">
 				</div>
-				<input id="chat-message-input" autofocus class="mr-2 col-11" placeholder="Type as {{user.username}}"
-					type="text">
+				<input id="chat-message-input" autofocus="on" class="mr-2 col-11"
+					placeholder="Type as {{user.username}}" type="text">
 
 				<input id="chat-message-submit" type="button" class="rounded btn btn-primary" value="Send">
 			</div>
@@ -153,8 +157,9 @@
 
 
 			<script>
+				// called when user clicks on one of the users listed in sidebar
 				function setDestinationUser(obj) {
-					destination_user = obj.innerText
+					let destination_user = obj.innerText
 
 					// reset the destination user in the nav bar
 					document.getElementById("destination-user").innerText = destination_user
@@ -175,8 +180,16 @@
 
 						const data = JSON.parse(e.data);
 
-						// append the message received from the server to the visible chat-log
-						document.getElementById("chat-log").innerText += data.message;
+						// if the page/websocket is reloaded
+						if (data.reset == true)
+							document.getElementById("chat-log").innerText = data.message;
+
+						else {
+							
+							if (data.from_user == destination_user)
+								// append the message received from the server to the visible chat-log
+								document.getElementById("chat-log").innerText += data.message;
+						}
 
 					}
 
@@ -192,7 +205,9 @@
 						// get the written message
 						message = document.getElementById("chat-message-input").value
 
-						console.log(chatSocket)
+						// pranjal: Hello World
+						message = "{{user.username}}: " + message
+
 						chatSocket.send(JSON.stringify({
 							"message": message
 						}))
@@ -210,6 +225,7 @@
 
 				}
 			</script>
+
 		</div>
 	</div>
 
