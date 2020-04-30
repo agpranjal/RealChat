@@ -1,3 +1,5 @@
+{%load static%}
+
 <!doctype html>
 <html lang="en" class="h-100">
 
@@ -8,7 +10,15 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 	<title>RealChat: Private chat</title>
+	<style>
+		.sidebar-users:hover {
+			background-color: #eeeeee;
+			text-decoration: none;
+		}
+	</style>
+
 </head>
+
 
 <body style="background-color: #ffffff;" class="h-100">
 
@@ -30,9 +40,10 @@
 		</div>
 	</nav>
 
-
-	<!-- Navigation side bar -->
 	<div class="row w-100" style="height: 90%;">
+
+
+		<!-- Navigation side bar -->
 		<div class="col-2">
 			<nav class="text-dark bg-light m-0 border-right" style="height:100%; width:100%;">
 				<ul style="list-style-type: none;" class="p-0 text-center">
@@ -45,10 +56,12 @@
 						{%for u in all_users%}
 						{%if u != user.username%}
 
-						<a href="#">
-							<li class="py-3 text-success border-bottom" onclick='setDestinationUser(this)'>
+						<a href="#" style="text-decoration:none;">
+							<li class="sidebar-users py-3 text-success border-bottom"
+								onclick='setDestinationUser(this)'>
 								<strong>{{u}}</strong></li>
 						</a>
+
 						{%endif%}
 						{%endfor%}
 
@@ -61,105 +74,35 @@
 		</div>
 
 
-		<!-- Taking message as input as displaying it in chat-log -->
 		<div class="col-10 h-100">
 			<div class="h-100">
+				<!-- Chat log -->
 				<div class="bg-light rounded shaodw pl-2 pt-3 pb-3 mb-3" style="overflow:auto; height: 90%;"
 					id="chat-log">
+
+					<div class="container text-center text-muted">
+						<h1>Talk to someone now!</h1>
+					</div>
+
 				</div>
-				<input id="chat-message-input" autofocus="on" class="mr-2 col-11"
-					placeholder="Type as {{user.username}}" type="text">
 
-				<input id="chat-message-submit" type="button" class="rounded btn btn-primary" value="Send">
+				<!-- Taking user input message in (hidden by default)-->
+				<input id="chat-message-input" class="mr-2 col-11" placeholder="Type as {{user.username}}" autofocus
+					type="text" hidden>
+				<input id="chat-message-submit" type="button" class="rounded btn btn-primary" value="Send" hidden>
+
 			</div>
-
-
-			<!-- <script>
-				const username = "{{username}}"
-				const roomName = "{{room_name}}"
-
-				const chatSocket = new WebSocket(
-					'ws://' +
-					window.location.host +
-					"/" +
-					"groupchat/" +
-					roomName +
-					"/" +
-					username +
-					'/'
-				);
-
-				var all_messages = "";
-				var new_messages;
-
-				chatSocket.onmessage = function (e) {
-					const data = JSON.parse(e.data);
-
-					// reset the list of active users
-					document.getElementById("active-users").innerHTML = ""
-					data.all_users.forEach((user) => {
-						document.getElementById("active-users").innerHTML +=
-							`<li class="p-3"><strong>${user}</strong></li>`
-					})
-
-					if (data.messages.trim() != "") {
-
-						// split the received message in new lines
-						all_messages = data.messages.split("\n")
-						// convert all_messages username part to bold
-						makeBold()
-
-						data.messages = new_messages.join("<br>")
-						document.querySelector('#chat-log').innerHTML = (data.messages);
-
-						// bring the scrollbar to bottom
-						var messageBody = document.querySelector('#chat-log');
-						messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
-
-					}
-				};
-
-				// makes the username appear bold
-				function makeBold() {
-					new_messages = []
-
-					all_messages.forEach(function (msg) {
-						var words = msg.split(":")
-						words[0] = "<strong>" + words[0] + "</strong>"
-						new_messages.push(words.join(": "))
-					})
-				}
-
-				chatSocket.onclose = function (e) {
-					console.error('Chat socket closed unexpectedly');
-				};
-
-				document.querySelector('#chat-message-input').onkeyup = function (e) {
-					if (e.keyCode === 13) { // enter, return
-						document.querySelector('#chat-message-submit').click();
-					}
-				};
-
-				document.querySelector('#chat-message-submit').onclick = function (e) {
-					const messageInputDom = document.querySelector('#chat-message-input');
-					const message = messageInputDom.value;
-
-					if (message.trim() != "")
-						chatSocket.send(JSON.stringify({
-							'messages': username + ": " + message
-						}));
-
-					messageInputDom.value = '';
-				};
-			</script> -->
-
-
 
 
 			<script>
 				// called when user clicks on one of the users listed in sidebar
 				function setDestinationUser(obj) {
-					
+
+					// unhide the inputbox and submit button
+					document.getElementById("chat-message-input").hidden = false
+					document.getElementById("chat-message-submit").hidden = false
+
+
 					let destination_user = obj.innerText
 
 					// reset the destination user in the nav bar
@@ -186,7 +129,7 @@
 							document.getElementById("chat-log").innerHTML = data.message;
 
 						else {
-							
+
 							if (data.from_user == destination_user)
 								// append the message received from the server to the visible chat-log
 								document.getElementById("chat-log").innerHTML += data.message;
@@ -202,19 +145,20 @@
 
 
 					// when the user submits the written message by clicking the submit button
-					document.getElementById("chat-message-submit").onclick = () => {
+					document.getElementById("chat-message-submit").onclick = ()=> {
 						// get the written message
 						message = document.getElementById("chat-message-input").value
 
-						// pranjal: Hello World
-						message = "<strong>{{user.username}}</strong>: " + message
+						// only send the message to server if user did not input just a series of whitespaces
+						if (message.trim() != "") {
+							message = "<strong>{{user.username}}</strong>: " + message
 
-						chatSocket.send(JSON.stringify({
-							"message": message
-						}))
+							chatSocket.send(JSON.stringify({
+								"message": message
+							}))
 
-						document.getElementById("chat-message-input").value = ""
-
+							document.getElementById("chat-message-input").value = ""
+						}
 					}
 
 					// click the submit button when enter key is pressed
