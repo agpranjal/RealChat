@@ -159,13 +159,14 @@
 			<script>
 				// called when user clicks on one of the users listed in sidebar
 				function setDestinationUser(obj) {
+					
 					let destination_user = obj.innerText
 
 					// reset the destination user in the nav bar
 					document.getElementById("destination-user").innerText = destination_user
 
 					// create the new chatsocket
-					let chatSocket = new WebSocket(
+					var chatSocket = new WebSocket(
 						'ws://' +
 						window.location.host +
 						"/" +
@@ -182,13 +183,13 @@
 
 						// if the page/websocket is reloaded
 						if (data.reset == true)
-							document.getElementById("chat-log").innerText = data.message;
+							document.getElementById("chat-log").innerHTML = data.message;
 
 						else {
 							
 							if (data.from_user == destination_user)
 								// append the message received from the server to the visible chat-log
-								document.getElementById("chat-log").innerText += data.message;
+								document.getElementById("chat-log").innerHTML += data.message;
 						}
 
 					}
@@ -206,7 +207,7 @@
 						message = document.getElementById("chat-message-input").value
 
 						// pranjal: Hello World
-						message = "{{user.username}}: " + message
+						message = "<strong>{{user.username}}</strong>: " + message
 
 						chatSocket.send(JSON.stringify({
 							"message": message

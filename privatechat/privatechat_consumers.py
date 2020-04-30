@@ -17,6 +17,7 @@ class PrivateChatConsumer(WebsocketConsumer):
         username = self.scope["url_route"]["kwargs"]["username"]
         destination_username = self.scope["url_route"]["kwargs"]["destination_username"]
         
+
         # add the current user to active_users
         active_users[username] = self.channel_name
 
@@ -28,12 +29,10 @@ class PrivateChatConsumer(WebsocketConsumer):
             "reset":True,
             }))
 
+
     def disconnect(self, code):
 
-            # remove the current user from active_users
-        username = self.scope["url_route"]["kwargs"]["username"]
-        del active_users[username]
-        self.close()
+        self.close(code)
 
 
     def receive(self, text_data):
@@ -41,7 +40,7 @@ class PrivateChatConsumer(WebsocketConsumer):
         username = self.scope["url_route"]["kwargs"]["username"]
         destination_username = self.scope["url_route"]["kwargs"]["destination_username"]
 
-        message = json.loads(text_data)["message"] + "\n";
+        message = json.loads(text_data)["message"] + "<br>";
 
         # echo the message back to the source user
         # so that he can see what he just sent
