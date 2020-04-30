@@ -1,3 +1,5 @@
+{%load static%}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,23 +11,25 @@
     <link rel="stylesheet" href="/static/realchat/rough.css">
     <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
     <title>REALCHAT</title>
+
 </head>
 
 <body>
-
-    <div class="container rounded">
-		<div class="container mt-5">
-			<div class="display-4 text-center pb-5" id="text1"><strong>REALCHAT</strong></div>
+    <div class="container">
+        <div class="container mt-5">
+            <div class="display-4 text-center pb-5" id="text1"><strong>REALCHAT</strong></div>
         </div>
         <div class="container mt-2">
-            <div class="d-flex row border-danger pb-5 text-center">
-                <div class="col-4">
+            <div class="row text-center">
+
+                <div class="col-3 mx-auto">
                     <div>
-						<a href="{%url 'login' %}"><img src="/static/realchat/person.png"></a>
+                        <a href="{%url 'login' %}"><img src="/static/realchat/person.png"></a>
                         <p id="text2">Private chat</p>
                     </div>
                 </div>
-                <div class="col-4">
+
+                <div class="col-3 mx-auto">
                     <div>
                         <a href="/groupchat/"><img src="/static/realchat/grpchat.png">
                             <p class="pt-4"></p>
@@ -33,12 +37,7 @@
                         <p id="text2">Join a room</p>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div>
-                        <a href="#"><img src="/static/realchat/randomperson.png"></a>
-						<p id="text2">Chat with a random stranger</p>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

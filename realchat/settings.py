@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "privatechat",
     "groupchat",
-    "randomchat",
     "authapp",
     "channels",
     "crispy_forms",

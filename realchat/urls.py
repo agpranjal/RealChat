@@ -22,7 +22,6 @@ urlpatterns = [
     
     path("", views.index),
     path("groupchat/", include("groupchat.urls")),
-    path("randomchat/", include("randomchat.urls")),
     
     path("privatechat/", include("privatechat.urls")),
     path("authenticate/", include("authapp.urls")),
