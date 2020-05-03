@@ -1,48 +1,87 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="height:100%;">
 
-	<head>
-		<!-- Required meta tags -->
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-		<title>Chat room</title>
-	</head>
+	<title>Chat room</title>
 
-	<body style="background-color: #eeeeee;">
+	<style>
+		html,
+		body {
+			height: 100% !important;
+			margin: 0px !important;
+			padding: 0px !important;
+		}
 
-		{%if username_error%}
-		<div class="alert alert-danger" role="alert">
-			Username not available. Please try another one.
-		</div>
-		{%endif%}
+		#room-list li {
+			list-style-type: none;
+			padding: 20px;
+			display: inline-block;
+			width: 100%;
+			border-bottom: 1px solid #dddddd;
+		}
 
-		{%if room_error%}
-		<div class="alert alert-danger" role="alert">
-			Room not available. Please request administrator to open a new room.
-		</div>
-		{%endif%}
+		#room-list {
+			padding: 0px;
+
+		}
+	</style>
+</head>
+
+<body style="background-color: #eeeeee;">
+
+	{%if username_error%}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		Username not available. Please try another one.
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{%endif%}
+
+	{%if room_error%}
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+		Room not available. Please request administrator to open a new room.
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{%endif%}
+
+	<div style="width: 15%; height: 100%; float: left; text-align: center; border-right: 1px solid #dddddd;">
+		<p style="padding-top: 30px; font-weight: bold; color: green">AVAILABLE ROOMS</p>
+		<ul id="room-list">
+			{% for room in all_rooms%}
+			<li style="color: red;">{{room}}</li>
+			{%endfor%}
+		</ul>
+	</div>
+
+	<div class="container col-6 pt-3">
+		<h2>Join a chat room now!</h2>
+		<form method="POST" class="mt-3"> {%csrf_token%}
+			Join room: <input autocomplete="off" class="mb-3 form-control" id="room-name-input" type="text"
+				name="room_name" placeholder="Room name" autofocus="on">
+			Join as: <input autocomplete="off" class="mb-3 form-control" type="text" name="username"
+				placeholder="Username" id="username">
+			<input id="room-name-submit" type="submit" class="form-control btn btn-primary" value="Enter">
+		</form>
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
-		<div class="container col-6 mt-4">
-			<h2>Join a chat room now!</h2>
-			<form method="POST" class="mt-3"> {%csrf_token%}
-				Join room: <input autocomplete="off" class="mb-3 form-control" id="room-name-input" type="text"
-																									name="room_name" placeholder="Room name" autofocus="on">
-				Join as: <input autocomplete="off" class="mb-3 form-control" type="text" name="username"
-																						 placeholder="Username" id="username">
-				<input id="room-name-submit" type="submit" class="form-control btn btn-primary" value="Enter">
-			</form>
-		</div>
 
-		<!-- Optional JavaScript -->
-		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-	</body>
+</body>
 
 </html>

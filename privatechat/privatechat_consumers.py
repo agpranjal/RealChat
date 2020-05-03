@@ -40,13 +40,14 @@ class PrivateChatConsumer(WebsocketConsumer):
         username = self.scope["url_route"]["kwargs"]["username"]
         destination_username = self.scope["url_route"]["kwargs"]["destination_username"]
 
-        message = json.loads(text_data)["message"] + "<br>";
+        message = json.loads(text_data)["message"];
 
         # echo the message back to the source user
         # so that he can see what he just sent
         self.send(text_data=json.dumps({
             "message":message,
-            "from_user":destination_username
+            "from_user":destination_username,
+            "echo":True
             }))
 
 

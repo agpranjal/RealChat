@@ -15,6 +15,30 @@
 			background-color: #eeeeee;
 			text-decoration: none;
 		}
+
+		#my-message {
+			text-align: right;
+			margin-right: 30px;
+
+		}
+
+		#my-message span {
+			background: #eeeeee;
+			padding: 20px;
+			border-radius: 50px;
+			display: inline-block;
+			max-width: 600px;
+			text-align: left;
+
+		}
+
+		#user-message span {
+			background: #dddddd;
+			padding: 20px;
+			border-radius: 50px;
+			display: inline-block;
+			max-width: 600px;
+		}
 	</style>
 
 </head>
@@ -51,8 +75,6 @@
 
 					<div id="all-users">
 
-						<!-- Inital list of all users (rendered by the view) -->
-						<!-- This will later be removed/edited by js to get real time update of all users -->
 						{%for u in all_users%}
 						{%if u != user.username%}
 
@@ -73,14 +95,12 @@
 			</nav>
 		</div>
 
-
 		<div class="col-10 h-100">
 			<div class="h-100">
 				<!-- Chat log -->
-				<div class="bg-light rounded shaodw pl-2 pt-3 pb-3 mb-3" style="overflow:auto; height: 90%;"
-					id="chat-log">
+				<div class="bg-light rounded pt-5 mb-3" style="overflow:auto; height: 90%;" id="chat-log">
 
-					<div class="container text-center text-muted">
+					<div class="container text-center text-muted" id="heading">
 						<h1>Talk to someone now!</h1>
 					</div>
 
@@ -101,6 +121,7 @@
 					// unhide the inputbox and submit button
 					document.getElementById("chat-message-input").hidden = false
 					document.getElementById("chat-message-submit").hidden = false
+					document.getElementById("heading").hidden = true
 
 
 					let destination_user = obj.innerText
@@ -124,16 +145,54 @@
 
 						const data = JSON.parse(e.data);
 
-						// if the page/websocket is reloaded
-						if (data.reset == true)
-							document.getElementById("chat-log").innerHTML = data.message;
 
+						// if the page/websocket is reloaded
+						if (data.reset == true) {
+							document.getElementById.innerHTML = ""
+
+							// format the message 
+							data.message.split("\n").slice(0, -1).forEach((line) => {
+								let arr = line.split(":")
+								arr.shift()
+								arr = arr.join(":")
+
+								// if the line is my message
+								if (line.split(":")[0] == "{{user.username}}") {
+									document.getElementById("chat-log").innerHTML +=
+										`<p id="my-message"><span>${arr}</span></p>`
+								}
+
+								// if the line is destination user's message
+								else
+									document.getElementById("chat-log").innerHTML +=
+									`<p id="user-message"><span>${arr}</span></p>`
+
+							})
+
+						}
+
+						// if the message came when user was talking to destination user
+						// ie, page/websocket didnot reload
 						else {
 
-							if (data.from_user == destination_user)
-								// append the message received from the server to the visible chat-log
-								document.getElementById("chat-log").innerHTML += data.message;
+							if (data.from_user == destination_user) {
+								let arr = data.message.split(":")
+								arr.shift()
+								arr = arr.join(":")
+
+								// if the received message is an echo back from the server
+								if (data.hasOwnProperty("echo"))
+									document.getElementById("chat-log").innerHTML +=
+									`<p id="my-message"><span>${arr}</span></p>`
+
+								// if the received message came from the destination user
+								else
+									document.getElementById("chat-log").innerHTML +=
+									`<p id="user-message"><span>${arr}</span></p>`
+							}
 						}
+
+						updateScroll()
 
 					}
 
@@ -145,13 +204,13 @@
 
 
 					// when the user submits the written message by clicking the submit button
-					document.getElementById("chat-message-submit").onclick = ()=> {
+					document.getElementById("chat-message-submit").onclick = () => {
 						// get the written message
 						message = document.getElementById("chat-message-input").value
 
 						// only send the message to server if user did not input just a series of whitespaces
 						if (message.trim() != "") {
-							message = "<strong>{{user.username}}</strong>: " + message
+							message = "{{user.username}}: " + message + "\n"
 
 							chatSocket.send(JSON.stringify({
 								"message": message
@@ -168,6 +227,11 @@
 						}
 					};
 
+				}
+
+				function updateScroll() {
+					var element = document.getElementById("chat-log");
+					element.scrollTop = element.scrollHeight;
 				}
 			</script>
 
