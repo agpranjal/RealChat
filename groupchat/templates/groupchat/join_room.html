@@ -66,9 +66,9 @@
 	<div class="container col-6 pt-3">
 		<h2>Join a chat room now!</h2>
 		<form method="POST" class="mt-3"> {%csrf_token%}
-			Join room: <input autocomplete="off" class="mb-3 form-control" id="room-name-input" type="text"
+			Join room: <input autocomplete="off" required class="mb-3 form-control" id="room-name-input" type="text"
 				name="room_name" placeholder="Room name" autofocus="on">
-			Join as: <input autocomplete="off" class="mb-3 form-control" type="text" name="username"
+			Join as: <input autocomplete="off" required class="mb-3 form-control" type="text" name="username"
 				placeholder="Username" id="username">
 			<input id="room-name-submit" type="submit" class="form-control btn btn-primary" value="Enter">
 		</form>
