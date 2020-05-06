@@ -9,7 +9,7 @@ Asynchronous chat application written in django channels and websockets
 + `python3 -m venv testenv`
 + `source env/bin/activate`
 
-> Note: To deactivate the virtual environment after you are done, type `deactive` in the terminal
+> Note: To deactivate the virtual environment after you are done, type `deactivate` in the terminal
 
 ### Install requirements:
 `pip3 install -r requirements.txt`
