@@ -8,6 +8,21 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <title>Chat room</title>
+
+    <style>
+        #user {
+            color: #aaaaaa;
+        }
+
+        #chat-message span {
+            background: #eeeeee;
+            padding: 15px;
+            border-radius: 50px;
+            display: inline-block;
+            max-width: 500px;
+            overflow-wrap: break-word;
+        }
+    </style>
 </head>
 
 <body style="background-color: #ffffff;" class="h-100">
@@ -59,39 +74,27 @@
                     // reset the list of active users
                     document.getElementById("active-users").innerHTML = ""
                     data.all_users.forEach((user) => {
-						document.getElementById("active-users").innerHTML += `<li class="p-3"><strong>${user}</strong></li>`
+                        document.getElementById("active-users").innerHTML +=
+                            `<li class="p-3"><strong>${user}</strong></li>`
                     })
 
-                    if (data.messages.trim() != "") {
+                    // display the received messages one line at a time
+                    data.messages.split("\n").slice(0, -1).forEach((line) => {
+                        // seperate the message and the username
+                        let arr = line.split(":")
+                        let user = arr.shift()
+                        arr = arr.join(":")
 
-                        // split the received message in new lines
-                        all_messages = data.messages.split("\n")
-                        // convert all_messages username part to bold
-                        makeBold()
+                        document.getElementById("chat-log").innerHTML +=
+                            `<span id="user">${user}</span>` +
+                            `<p id="chat-message"><span>${arr}</span></p>`
 
-                        data.messages = new_messages.join("<br>")
-                        document.querySelector('#chat-log').innerHTML = (data.messages);
-
-                        // bring the scrollbar to bottom
-                        var messageBody = document.querySelector('#chat-log');
-                        messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
-
-                    }
-                };
-
-                // makes the username appear bold
-                function makeBold() {
-                    new_messages = []
-
-                    all_messages.forEach(function (msg) {
-                        var words = msg.split(":")
-                        words[0] = "<strong>" + words[0] + "</strong>"
-                        new_messages.push(words.join(": "))
                     })
-                }
 
-                chatSocket.onclose = function (e) {
-                    console.error('Chat socket closed unexpectedly');
+                    // bring the scrollbar to bottom
+                    var messageBody = document.querySelector('#chat-log');
+                    messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+
                 };
 
                 document.querySelector('#chat-message-input').onkeyup = function (e) {

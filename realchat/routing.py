@@ -15,3 +15,7 @@ application = ProtocolTypeRouter({
     # handler for http connections getsautomatically added
 })
 
+# Remove all the existing Users from groupchat.models.User
+# (result of a bug)
+from groupchat.models import User
+list(map(User.delete, User.objects.all()))
