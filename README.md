@@ -7,7 +7,7 @@ Asynchronous chat application written in django channels and websockets
 
 ### Create a virtual environment and activate it (e.g. python3 venv):
 + `python3 -m venv testenv`
-+ `source env/bin/activate`
++ `source testenv/bin/activate`
 
 > Note: To deactivate the virtual environment after you are done, type `deactivate` in the terminal.
 
