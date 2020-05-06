@@ -9,6 +9,8 @@ Asynchronous chat application written in django channels and websockets
 + `python3 -m venv testenv`
 + `source env/bin/activate`
 
+> Note: To deactivate the virtual environment, type `deactive` in the terminal
+
 ### Install requirements:
 `pip3 install -r requirements.txt`
 
@@ -17,4 +19,3 @@ Asynchronous chat application written in django channels and websockets
 
 Open browser and go to [127.0.0.1:8000](http://127.0.0.1:8000)
 
-> Note: To deactivate the virtual environment, type `deactive` in the terminal
