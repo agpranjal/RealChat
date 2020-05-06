@@ -19,3 +19,12 @@ Asynchronous chat application written in django channels and websockets
 
 Open browser and go to [127.0.0.1:8000](http://127.0.0.1:8000)
 
+
+### NOTE (for private chat):
+Following are some of the default users available in the database (only for trial, you need to create your own account)
+
+|username   |  password |
+|---|---|
+|  admin | admin123  | 
+|  ag_pranjal |  ag_pranjal123 |
+|  gaurav |  gaurav123 |
