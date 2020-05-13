@@ -78,6 +78,9 @@
                             `<li class="p-3"><strong>${user}</strong></li>`
                     })
 
+                    // reset the entire chat-log (so that it may be overwritten with the new messages)
+                    document.getElementById("chat-log").innerHTML = ""
+
                     // display the received messages one line at a time
                     data.messages.split("\n").slice(0, -1).forEach((line) => {
                         // seperate the message and the username
