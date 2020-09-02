@@ -1,5 +1,5 @@
 # RealChat
-Asynchronous chat application written with django channels and websockets
+Real time chat application
 
 ### Features:
 + Peer to Peer chat (with proper authentication and message storage)
