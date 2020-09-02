@@ -2,7 +2,7 @@
 Real time chat application
 
 ### Features:
-+ Peer to Peer chat (with proper authentication and message storage)
++ Private chat (peer to peer) (with proper authentication and message storage)
 + Group chat
 
 ### Create a virtual environment and activate it (e.g. python3 venv):
