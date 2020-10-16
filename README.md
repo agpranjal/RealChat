@@ -30,3 +30,16 @@ In project directory
 ### `python3 manage.py runserver`
 
 Open browser and go to [127.0.0.1:8000](http://127.0.0.1:8000)
+
+
+---
+### Screenshots
+![](./screenshots/1.png)
+
+![](./screenshots/2.png)
+
+![](./screenshots/3.png)
+
+![](./screenshots/4.png)
+
+![](./screenshots/5.png)
