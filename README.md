@@ -19,7 +19,7 @@ In project directory:
 In project directory:
 ### `pip3 install -r requirements.txt`
 
-## Create the database
+## Create sqlite database
 In project directory:
 
 + ### `python3 manage makemigrations`
